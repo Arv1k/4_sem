@@ -6,7 +6,7 @@
 #include "../box.h"
 
 
-struct box* list_create();
+box* list_create();
 
 
 

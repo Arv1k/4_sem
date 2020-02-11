@@ -3,6 +3,26 @@
 #include <stdio.h>
 
 
-struct box* vector_create() {
-    printf("Privet, ya VECTOR\n");
+
+typedef struct vector {
+    box    corobka;
+    int    capacity;
+    void** dataset;
+} vector;
+
+
+void vector_destroy(box* obj) {
+    vector* this = (vector*) obj;
+
+
+
+    free(this);
+}
+
+box* vector_create() {
+    vector* this = (vector*) malloc(sizeof(vector));
+
+    this->corobka.destroy = vector_destroy;
+
+    return (box*) this;
 }
