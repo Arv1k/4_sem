@@ -8,16 +8,13 @@ all: main.o list.o vector.o
 	$(RES) mv main.out ../
 
 main.o: main.c
-	$(COMP) $(FLAGS) main.c
-	mv main.o resources/
+	$(COMP) $(FLAGS) main.c -o resources/main.o
 
 list.o: list/list.c
-	$(COMP) $(FLAGS) list/list.c
-	mv list.o resources/
+	$(COMP) $(FLAGS) list/list.c -o resources/list.o
 
 vector.o: vector/vector.c
-	$(COMP) $(FLAGS) vector/vector.c
-	mv vector.o resources/
+	$(COMP) $(FLAGS) vector/vector.c -o resources/vector.o
 
 clean:
 	$(RES) rm -rf *.o

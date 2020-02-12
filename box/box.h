@@ -8,13 +8,15 @@ typedef struct box {
     int size;
 
     // functions
-    void  (*destroy) (struct box* object);
+    void* (*item)    (struct box* object, int index);
 
-    void* (*elem)    (struct box* objecr, int index);
     void  (*push)    (struct box* object, void* data);
     void  (*pop)     (struct box* object);
+
     void  (*insert)  (struct box* object, int index, void* data);
     void  (*remove)  (struct box* object, int index);
+
+    void  (*destroy) (struct box* object);
 } box;
 
 
