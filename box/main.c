@@ -6,19 +6,21 @@ int main() {
     box* list   = list_create();
     box* vector = vector_create();
 
-    int x = 5;
-    list->push(list, (void*) &x);
+    list->dump(list);
 
+    // list little checking
+    int arr[5];
+    for (int i = 0; i < 5; i++) {
+        arr[i] = 2*i;
+        list->push(list, (void*) &arr[i]);
+    }
 
-    printf("What\n");
+    int hey = 90;
+    list->insert(list, 3, &hey);
+    list->dump(list);
 
     list->destroy(list);
-
-    printf("a\n");
-
     vector->destroy(vector);
-
-    printf("FUCK?\n");
 
     return 0;
 }

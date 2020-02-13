@@ -15,19 +15,23 @@ void* vector_item (box* obj, int index) {
 
 }
 
-void vector_push (box* object, void* data) {
+void vector_push (box* obj, void* data) {
 
 }
 
-void vector_pop (box* object) {
+void vector_pop (box* obj) {
 
 }
 
-void vector_insert (box* object, int index, void* data) {
+void vector_insert (box* obj, int index, void* data) {
 
 }
 
-void vector_remove (box* object, int index) {
+void vector_dump (box* obj) {
+
+}
+
+void vector_remove (box* obj, int index) {
 
 }
 
@@ -54,6 +58,8 @@ box* vector_create() {
 
     this->corobka.insert = vector_insert;
     this->corobka.remove = vector_remove;
+
+    this->corobka.dump = vector_dump;
 
     this->corobka.destroy = vector_destroy;
 
