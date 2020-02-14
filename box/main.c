@@ -45,9 +45,17 @@ int main() {
 
     list->dump(list);
 
-    int a[] = {1, 7, 3, 5, 6, 8};
+    /*int a[] = {1, 7, 3, 5, 6, 8};
     for (int i = 0; i < 5; i++)
+        vector->push(vector, &a[i]);*/
+
+    int a[6];
+    for (int i = 0; i < 5; i++) {
+        a[i] = 2*i;
         vector->push(vector, &a[i]);
+    }
+
+    a[5] = 7;
 
     vector->insert(vector, 1, &a[5]);
     vector->dump(vector);
