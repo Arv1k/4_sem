@@ -1,21 +1,16 @@
-COMP = gcc
+CC = gcc
 FLAGS = -c -Wall -pedantic -g
-RES = cd resources &&
+VPATH = list:vector:resources
 
+all: main.out
 
-all: main.o list.o vector.o		
-	$(RES) $(COMP) main.o list.o vector.o -o main.out
-	$(RES) mv main.out ../
+main.out: resources/main.o resources/list.o resources/vector.o
+	$(CC) resources/main.o resources/list.o resources/vector.o -o main.out
 
-main.o: main.c list/list.h vector/vector.h
-	$(COMP) $(FLAGS) main.c -o resources/main.o
-
-list.o: list/list.c box.h
-	$(COMP) $(FLAGS) list/list.c -o resources/list.o
-
-vector.o: vector/vector.c box.h
-	$(COMP) $(FLAGS) vector/vector.c -o resources/vector.o
+resources/%.o: %.c
+	$(CC) $(FLAGS) $< -o $@
 
 clean:
-	$(RES) rm -rf *.o
+	cd resources && rm -rf *.o
+	rm -rf *.o
 	rm -rf *.out
