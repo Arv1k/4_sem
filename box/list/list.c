@@ -21,13 +21,21 @@ typedef struct list {
 } list;
 
 
+list_elem* list_find_item(list* this, int index) {
+    list_elem* item = this->head;
+    for (int i = 0; i < index; i++)
+        item = item->next;
+
+    return item;
+}
+
 int list_size(box* obj) {
     list* this = (list*) obj;
 
     return this->size;
 }
 
-void* list_item (box* obj, int index) {
+void* list_item(box* obj, int index) {
     list* this = (list*) obj;
 
     if (index + 1 > this->size) {
@@ -36,17 +44,26 @@ void* list_item (box* obj, int index) {
         return NULL;
     }
 
-    list_elem* cur_item = this->head;
-    for (int i = 0; i < index; i++)
-        cur_item = cur_item->next;
+    list_elem* cur_item = list_find_item(this, index);
 
     return cur_item->data;
 }
 
 void list_swap(box* obj, int index_1, int index_2) {
     list* this = (list*) obj;
+    if (index_1 > this->size)
+        printf("The list size is less than %d!\n", index_1);
 
+    if (index_2 > this->size)
+        printf("The list size is less than %d!\n", index_2);
 
+    list_elem* item_1 = list_find_item(this, index_1);
+    list_elem* item_2 = list_find_item(this, index_2);
+
+    void* tmp = item_1->data;
+
+    item_1->data = item_2->data;
+    item_2->data = tmp;
 }
 
 void list_push (box* obj, void* data) {
@@ -108,9 +125,7 @@ void list_insert (box* obj, int index, void* data) {
         return;
     }
 
-    list_elem* cur_item = this->head;
-    for (int i = 0; i < index; i++)
-        cur_item = cur_item->next;
+    list_elem* cur_item = list_find_item(this, index);
 
     list_elem* item = (list_elem*) malloc(sizeof(list_elem));
     item->data = data;
@@ -134,9 +149,7 @@ void list_remove (box* obj, int index) {
         return;
     }
 
-    list_elem* cur_item = this->head;
-    for (int i = 0; i < index; i++)
-        cur_item = cur_item->next;
+    list_elem* cur_item = list_find_item(this, index);
 
     if (cur_item->prev)
         cur_item->prev->next = cur_item->next;
@@ -202,6 +215,10 @@ void list_dump(box* obj) {
 void list_destroy(box* obj) {
     list* this = (list*) obj;
 
+    int size = this->size;
+    for (int i = 0; i < size; i++)
+        list_pop(obj);
+
     free(this);
 }
 
@@ -216,8 +233,8 @@ box* list_create() {
     // box part
     this->corobka.size = list_size;
 
-    this->corobka.swap = list_swap;
     this->corobka.item = list_item;
+    this->corobka.swap = list_swap;
 
     this->corobka.push = list_push;
     this->corobka.pop  = list_pop;
