@@ -27,7 +27,6 @@ int main(int argc, char** argv) {
     for (int i = 2; i < argc; i++) {
         numbers.push_back(strtoll(argv[i], nullptr, 10));
     }
-
     std::vector <char> opers;
 
     perebor(numbers, opers, 1, numbers[0]);

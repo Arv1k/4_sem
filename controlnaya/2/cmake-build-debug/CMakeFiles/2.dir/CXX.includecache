@@ -7,16 +7,10 @@
 #IncludeRegexTransform: 
 
 /home/arv1k/CLionProjects/4_sem/controlnaya/2/main.cpp
-unistd.h
--
-malloc.h
--
-fcntl.h
--
-iostream
--
-future
+cstdio
 -
 thread
+-
+mutex
 -
 

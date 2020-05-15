@@ -1,99 +1,49 @@
-#include <unistd.h>
-#include <malloc.h>
-#include <fcntl.h>
-#include <iostream>
-#include <future>
+#include <cstdio>
 #include <thread>
-
-
-enum {
-    STD_OUT      = 1,
-    STD_IN       = 0,
-};
-
-
-int save_write(int fd, char* buf, int ch_read);
-void cp_src_to_dest (int fd_src, int fd_dest);
-
-
-int main(int argc, char** argv) {
-    int num_files = (argc > 1) ? (argc - 1) : 1;
-
-    for (int i = 1; i <= num_files; i++) {
-        int in_fd = 0;
-
-        if (argc == 1)
-            in_fd = STD_IN;
-        else {
-            in_fd = open(argv[i], O_RDONLY);
-            if (in_fd < 0) {
-                perror("Can't open the file! ");
-
-                continue;
-            }
-        }
-
-        cp_src_to_dest (in_fd, STD_OUT);
-    }
-}
-
-const int MAX_STR_SIZE = 1024*1024;
+#include <mutex>
 
 std::mutex lock;
 
-void cp_src_to_dest (int fd_src, int fd_dest) {
-    std::promise<int> promise_read;
-    std::promise<int> promise_write;
+int main(int argc, char** argv) {
+    FILE* file_1 = fopen(argv[1], "rb");
+    FILE* file_2 = stdout;
 
-    std::future<int> future_read = promise_read.get_future();
-    std::future<int> future_write = promise_write.get_future();
+    char buf[1024*1024];
 
-    char buf[MAX_STR_SIZE];
-
-    auto new_read = [](std::promise<int> &p, int fd_src, char* buf) {
+    std::thread thread_read([](char* buf, FILE* file_read) {
         int ch_read;
         do {
-            lock.try_lock();
-
-            ch_read = read(fd_src, buf, 128);
-
+            lock.lock();
+            ch_read = fread(buf, 1, 16, file_read);
+            printf("Eto ya read\n");
             lock.unlock();
         } while (ch_read != 0);
+    }, buf, file_1);
+    thread_read.detach();
 
-        p.set_value(1);
-    };
-    std::thread th_read(new_read, std::ref(promise_read), fd_src, buf);
-
-    auto new_write = [](std::future<int> &f, int fd_dest, char* buf) {
+    std::thread thread_write([](char* buf, FILE* file_write) {
         int ch_write;
         do {
-            lock.try_lock();
-
-            ch_write = save_write(fd_dest, buf, 128);
-
+            lock.lock();
+            ch_write = fwrite(buf, 1, 16, file_write);
+            printf("Eto ya write\n");
             lock.unlock();
-        } while (f.get() == 1);
-    };
-    std::thread th_write(new_write, std::ref(future_write), fd_dest, buf);
+        } while (ch_write != 0);
+    }, buf, file_2);
+    thread_write.detach();
 
-    th_read.join();
-    th_write.join();
+    printf("A ya jdu\n");
 
-    close(fd_src);
-}
+    /*for (;;) {
+        int ch_read = fread(buf, 1, 16, file_1);
 
-int save_write(int fd, char* buf, int ch_read) {
-    int ch_write     = 0;
-    int ch_to_write  = ch_read;
-    int cur_ch_write = 0;
+        if (ch_read == 0) break;
 
-    for (;;) {
-        cur_ch_write = write(fd, &buf[ch_write], ch_to_write);
+        int ch_write = fwrite(buf, 1, 16, file_2);
+        if (ch_write < 0) {
+            perror("Can't write the data! ");
 
-        if (ch_write == ch_read) return ch_write;
-        if (cur_ch_write < 0)    return -1;
-
-        ch_write    += cur_ch_write;
-        ch_to_write -= ch_write;
-    }
+            break;
+        }
+    }*/
 }
