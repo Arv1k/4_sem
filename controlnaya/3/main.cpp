@@ -44,6 +44,7 @@ long perebor(const std::vector<long>& numbers, int cur_it, long cur_eval) {
     opers.push_back(PLUS);
     long res = perebor(numbers, cur_it + 1, cur_eval + numbers[cur_it]);
     if (res == result_number) {
+
         return res;
     }
     opers.pop_back();

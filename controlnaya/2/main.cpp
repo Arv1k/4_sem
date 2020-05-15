@@ -1,6 +1,9 @@
 #include <unistd.h>
 #include <malloc.h>
 #include <fcntl.h>
+#include <iostream>
+#include <future>
+#include <thread>
 
 
 enum {
@@ -30,31 +33,50 @@ int main(int argc, char** argv) {
             }
         }
 
-        //int fd_out = STD_OUT;
         cp_src_to_dest (in_fd, STD_OUT);
     }
 }
 
 const int MAX_STR_SIZE = 1024*1024;
 void cp_src_to_dest (int fd_src, int fd_dest) {
-    for (;;) {
-        char buf[MAX_STR_SIZE];
+    std::promise<int> promise_read;
+    std::promise<int> promise_write;
+
+    std::future<int> future_read = promise_read.get_future();
+    std::future<int> future_write = promise_write.get_future();
+
+
+    char buf[MAX_STR_SIZE];
+
+    auto new_read = [](std::promise<int> &p, int fd_src, char *buf) {
         int ch_read = read(fd_src, buf, MAX_STR_SIZE);
-        if(ch_read < 0) {
+        if (ch_read < 0) {
             perror("Can't read the data! ");
-
-            break;
         }
 
-        if (ch_read == 0) break;
+        p.set_value(ch_read);
+    };
+    std::thread th_read(new_read, std::ref(promise_read), fd_src, buf);
 
-        int ch_write = save_write(fd_dest, buf, ch_read);
-        if(ch_write < 0) {
-            perror("Can't write the data! ");
+    int ch_read = future_read.get();
+    if (ch_read == 0) {
 
-            break;
-        }
     }
+
+    auto new_write = [](std::promise<int> &p, int fd_dest, char *buf,
+                        int ch_read) {
+        int ch_write = save_write(fd_dest, buf, ch_read);
+        if (ch_write < 0) {
+            perror("Can't write the data! ");
+        }
+
+        p.set_value(ch_write);
+    };
+    std::thread th_write(new_write, std::ref(promise_write), fd_dest, buf,
+                ch_read);
+
+    th_read.join();
+    th_write.join();
 
     close(fd_src);
 }
