@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <vector>
 #include <list>
+#include <iostream>
 
 enum {
     PLUS = '+',
@@ -11,7 +12,7 @@ enum {
 };
 
 long result_number;
-std::list <char> opers;
+std::vector <char> opers;
 
 long perebor(const std::vector<long>& numbers, int cur_it, long cur_eval);
 
@@ -24,13 +25,15 @@ int main(int argc, char** argv) {
     }
 
     long result = perebor(numbers, 1, numbers[0]);
-    printf("%ld\n", result);
 
-    for (auto elem : opers) {
-        printf("%c ", elem);
+    for (int i = 0; i < opers.size(); i++) {
+        if (opers[i] == ' ') {
+            printf("%ld", numbers[i]);
+            continue;
+        }
+        printf("%ld%c", numbers[i], opers[i]);
     }
-
-    printf("\n");
+    printf("%ld = %ld", numbers.back(), result_number);
 }
 
 long perebor(const std::vector<long>& numbers, int cur_it, long cur_eval) {
@@ -53,26 +56,27 @@ long perebor(const std::vector<long>& numbers, int cur_it, long cur_eval) {
     opers.pop_back();
 
     char last_ch = opers.back();
+    long action = 0;
     switch (last_ch) {
         case PLUS:
-            cur_eval -= numbers[cur_it - 1];
-            cur_eval += numbers[cur_it - 1]*numbers[cur_it];
+            action -= numbers[cur_it - 1];
+            action += numbers[cur_it - 1]*numbers[cur_it];
             break;
 
         case MINUS:
-            cur_eval += numbers[cur_it - 1];
-            cur_eval -= numbers[cur_it - 1]*numbers[cur_it];
+            action += numbers[cur_it - 1];
+            action -= numbers[cur_it - 1]*numbers[cur_it];
             break;
 
         case MULTIPLY:
         case CONNECT:
-            cur_eval *= numbers[cur_it];
-
         default:
-            cur_eval = -1;
+            action *= numbers[cur_it] - 1;
+            break;
+
     }
     opers.push_back(MULTIPLY);
-    res = perebor(numbers, cur_it + 1, cur_eval);
+    res = perebor(numbers, cur_it + 1, cur_eval + action);
     if (res == result_number) {
         return res;
     }
@@ -81,27 +85,29 @@ long perebor(const std::vector<long>& numbers, int cur_it, long cur_eval) {
     last_ch = opers.back();
     switch (last_ch) {
         case PLUS:
-            cur_eval -= numbers[cur_it - 1];
-            cur_eval += numbers[cur_it - 1]*10 + numbers[cur_it];
+            action -= numbers[cur_it - 1];
+            action += numbers[cur_it - 1]*10 + numbers[cur_it];
             break;
 
         case MINUS:
-            cur_eval += numbers[cur_it - 1];
-            cur_eval -= numbers[cur_it - 1]*10 + numbers[cur_it];
+            action += numbers[cur_it - 1];
+            action -= numbers[cur_it - 1]*10 + numbers[cur_it];
             break;
 
         case MULTIPLY:
-            cur_eval /= numbers[cur_it - 1];
-            cur_eval *= numbers[cur_it - 1]*10 + numbers[cur_it];
+            action = cur_eval / numbers[cur_it - 1];
+            action *= numbers[cur_it - 1]*10 + numbers[cur_it];
+            action -= cur_eval;
+            break;
 
         case CONNECT:
-            cur_eval = cur_eval*10 + numbers[cur_it];
-
         default:
-            cur_eval = -1;
+            action = cur_eval*10 + numbers[cur_it];
+            action -= cur_eval;
+            break;
     }
     opers.push_back(CONNECT);
-    res = perebor(numbers, cur_it + 1, cur_eval);
+    res = perebor(numbers, cur_it + 1, cur_eval + action);
     if (res == result_number) {
         return res;
     }
