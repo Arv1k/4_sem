@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include <vector>
 #include <list>
-#include <iostream>
 
 enum {
     PLUS = '+',
@@ -25,7 +24,13 @@ int main(int argc, char** argv) {
     }
 
     long result = perebor(numbers, 1, numbers[0]);
-    std::cin >> numbers[0];
+    printf("%ld\n", result);
+
+    for (auto elem : opers) {
+        printf("%c ", elem);
+    }
+
+    printf("\n");
 }
 
 long perebor(const std::vector<long>& numbers, int cur_it, long cur_eval) {
