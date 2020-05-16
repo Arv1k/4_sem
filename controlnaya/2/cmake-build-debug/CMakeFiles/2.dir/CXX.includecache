@@ -6,6 +6,8 @@
 
 #IncludeRegexTransform: 
 
+/home/arv1k/CLionProjects/4_sem/controlnaya/2/buffer.h
+
 /home/arv1k/CLionProjects/4_sem/controlnaya/2/main.cpp
 cstdio
 -
@@ -13,4 +15,8 @@ thread
 -
 mutex
 -
+future
+-
+buffer.h
+/home/arv1k/CLionProjects/4_sem/controlnaya/2/buffer.h
 

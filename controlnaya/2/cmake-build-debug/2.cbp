@@ -84,6 +84,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/arv1k/CLionProjects/4_sem/controlnaya/2/buffer.h">
+			<Option target="2"/>
+		</Unit>
 		<Unit filename="/home/arv1k/CLionProjects/4_sem/controlnaya/2/main.cpp">
 			<Option target="2"/>
 		</Unit>
