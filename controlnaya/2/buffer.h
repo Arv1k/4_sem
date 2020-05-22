@@ -4,62 +4,64 @@
 
 class buffer {
 private:
-    char *_buf;
-    int _capacity;
-    int _size;
-    int _flag;
+    char *buf_;
+    int capacity_;
+    int size_;
+    int flag_;
+
     std::pair <std::promise<void>, std::future<void>> p_read_;
     std::pair <std::promise<void>, std::future<void>> p_write_;
-    std::mutex lock;
+
+    std::mutex lock_;
 
 public:
     explicit buffer(int cap) {
-        _buf = new char[cap];
-        _capacity = cap;
-        _size = 0;
-        _flag = 0;
+        buf_ = new char[cap];
+        capacity_ = cap;
+        size_ = 0;
+        flag_ = 0;
 
         p_read_.second  = p_write_.first.get_future();
         p_write_.second = p_read_.first.get_future();
     };
 
     ~buffer() {
-        delete[] _buf;
-        _capacity = -1;
-        _size = -1;
-        _flag = -1;
+        delete[] buf_;
+        capacity_ = -1;
+        size_ = -1;
+        flag_ = -1;
     }
 
     int size() {
-        return _size;
+        return size_;
     }
 
     int capacity() {
-        return _capacity;
+        return capacity_;
     }
 
     char *buf() {
-        return _buf;
+        return buf_;
     }
 
     void plus_size(int heh) {
-        lock.lock();
-        _size += heh;
-        lock.unlock();
+        lock_.lock();
+        size_ += heh;
+        lock_.unlock();
     }
 
     void minus_size(int heh) {
-        lock.lock();
-        _size -= heh;
-        lock.unlock();
+        lock_.lock();
+        size_ -= heh;
+        lock_.unlock();
     }
 
     int flag() {
-        return _flag;
+        return flag_;
     }
 
     void change_flag(int new_flag) {
-        _flag = new_flag;
+        flag_ = new_flag;
     }
 
     void read_set() {
