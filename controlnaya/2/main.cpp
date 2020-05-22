@@ -12,13 +12,13 @@
 #endif
 
 
-const int max_val = 512;
+const int max_val = 4;
 
 
 void cp_src_to_dest (FILE* file_1, FILE* file_2, buffer& buf);
 
 int main(int argc, char** argv) {
-    buffer buf(2048);
+    buffer buf(1024);
 
     if (argc == 1) {
         cp_src_to_dest(stdin, stdout, buf);
