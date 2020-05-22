@@ -5,7 +5,7 @@
 #include "buffer.h"
 
 
-//#define DEBUG
+#define DEBUG
 
 
 #ifdef DEBUG
@@ -14,13 +14,13 @@
 #define PRINTF ;
 #endif
 
-const int max_val = 512;
+const int max_val = 1024;
 
 int main(int argc, char** argv) {
     FILE* file_1 = fopen(argv[1], "rb");
     FILE* file_2 = stdout;
 
-    buffer buf(1024);
+    buffer buf(1096);
 
     std::thread thread_read([](buffer& buf, FILE* file_read) {
         buf.change_flag(1);
@@ -28,6 +28,13 @@ int main(int argc, char** argv) {
         int ch_read = 0;
         int cur_offset = 0;
         do {
+            if (cur_offset >= buf.capacity()) {
+                PRINTF("\nReader: Oops, waiting\n\n");
+                buf.read_get();
+
+                cur_offset = 0;
+            }
+
             ch_read = fread(buf.buf() + cur_offset, 1, max_val, file_read);
             buf.plus_size(ch_read);
             cur_offset += ch_read;
@@ -36,17 +43,14 @@ int main(int argc, char** argv) {
             PRINTF("Reader: buf size: %d, my offset: %d\n\n", buf.size(), cur_offset);
 
             if (buf.size()*100 > 80*buf.capacity()) {
+                PRINTF("\nReader: Calling Writer!\n\n");
                 buf.read_set();
-            }
-
-            if (cur_offset >= buf.capacity()) {
-                buf.read_get();
-
-                cur_offset = 0;
             }
 
             //std::this_thread::sleep_for(std::chrono::seconds(1));
         } while (ch_read != 0);
+
+        buf.read_set();
 
         buf.change_flag(0);
     }, std::ref(buf), file_1);
@@ -56,6 +60,14 @@ int main(int argc, char** argv) {
         int cur_offset = 0;
         do {
             if (buf.size() == 0) {
+                PRINTF("\nWriter: Oops, waiting x1\n\n");
+                buf.write_get();
+
+                cur_offset = 0;
+            }
+
+            if (cur_offset >= buf.capacity()) {
+                PRINTF("\nWriter: Oops, waiting x2\n\n");
                 buf.write_get();
 
                 cur_offset = 0;
@@ -66,18 +78,13 @@ int main(int argc, char** argv) {
             buf.minus_size(ch_write);
             cur_offset += ch_write;
 
-            if (buf.size()*100 < 2*buf.capacity()) {
-                buf.write_set();
-            }
-
-            if (cur_offset >= buf.capacity()) {
-                buf.write_get();
-
-                cur_offset = 0;
-            }
-
             PRINTF("\nWriter: wrote %d\n", ch_write);
             PRINTF("Writer: buf size: %d, my offset: %d\n\n", buf.size(), cur_offset);
+
+            if (buf.size()*100 < 20*buf.capacity()) {
+                PRINTF("\nWriter: Calling Reader!\n\n");
+                buf.write_set();
+            }
 
             //std::this_thread::sleep_for(std::chrono::seconds(1));
         } while (buf.size() != 0 || buf.flag() == 1);
