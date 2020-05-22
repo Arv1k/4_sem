@@ -5,7 +5,7 @@
 #include "buffer.h"
 
 
-#define DEBUG
+//#define DEBUG
 
 
 #ifdef DEBUG
@@ -14,13 +14,13 @@
 #define PRINTF ;
 #endif
 
-const int max_val = 1024;
+const int max_val = 512;
 
 int main(int argc, char** argv) {
     FILE* file_1 = fopen(argv[1], "rb");
     FILE* file_2 = stdout;
 
-    buffer buf(1096);
+    buffer buf(1024);
 
     std::thread thread_read([](buffer& buf, FILE* file_read) {
         buf.change_flag(1);
@@ -35,7 +35,8 @@ int main(int argc, char** argv) {
                 cur_offset = 0;
             }
 
-            ch_read = fread(buf.buf() + cur_offset, 1, max_val, file_read);
+            int to_read = (buf.capacity() - buf.size() >= max_val)? max_val : buf.capacity() - buf.size();
+            ch_read = fread(buf.buf() + cur_offset, 1, to_read, file_read);
             buf.plus_size(ch_read);
             cur_offset += ch_read;
 
@@ -50,7 +51,9 @@ int main(int argc, char** argv) {
             //std::this_thread::sleep_for(std::chrono::seconds(1));
         } while (ch_read != 0);
 
-        buf.read_set();
+        if (buf.size() != 0) {
+            buf.read_set();
+        }
 
         buf.change_flag(0);
     }, std::ref(buf), file_1);
