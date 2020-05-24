@@ -8,15 +8,17 @@
 #include "ai.h"
 #include <unistd.h>
 
+
 int main() {
-    View * v = View::get();
-    Game * g = Game::get();//????????????
+    View* v = View::get();
+    Game* g = Game::get();
+
     Snake s;
-
     Snake s_ai;
-    Ai ai(&s_ai, g);
 
+    Ai ai(&s_ai, g);
     Human h(&s, g);
+
     g->add(&s);
 
     g->controls.push_back(&ai);

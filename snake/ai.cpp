@@ -4,7 +4,8 @@
 #include <algorithm>
 #include <random>
 
-Ai::Ai(Snake * s, Game * g): Control(s), game_(g) {
+
+Ai::Ai(Snake* s, Game* g): Control(s), game_(g) {
     View::get()->setOnAi(this);
 }
 

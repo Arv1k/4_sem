@@ -1,17 +1,20 @@
-#ifndef WFCPP_AI_H
-#define WFCPP_AI_H
+#ifndef AI_H
+#define AI_H
 
-#include "control.h"
+
+#import "control.h"
+
 
 class Ai : public Control {
 public:
-    Ai(Snake *, Game *);
+    Ai(Snake*, Game*);
 
     ~Ai();
 
-    Game *game_;
+    Game* game_;
 
     void onMove();
 };
 
-#endif //WFCPP_AI_H
+
+#endif // AI_H

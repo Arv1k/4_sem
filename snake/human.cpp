@@ -6,16 +6,16 @@
 #include "view.h"
 #include "tui.h"
 
-Human::Human(Snake * s, Game *g): Control(s), game(g) {
+
+Human::Human(Snake* s, Game* g): Control(s), game(g) {
     View::get()->setOnKey(this);
 }
 
 Human::~Human() {
-    std::cout << "Human dctr called\n";
+    std::cout << "Human dstr called\n";
 }
 
 void Human::onkey(int key) {
-    //printf("key pressed = %d ", n);
     View *v = View::get();
     switch (key) {
         case 'q':
@@ -38,6 +38,4 @@ void Human::onkey(int key) {
             snake->direction_ = DOWN;
             break;
     }
-    //game->move();
-    //View::get()->draw();
 }

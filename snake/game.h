@@ -1,10 +1,12 @@
-#ifndef WFCPP_GAME_H
-#define WFCPP_GAME_H
+#ifndef GAME_H
+#define GAME_H
+
 
 #include <list>
 #include <utility>
 #include <functional>
 #include <experimental/optional>
+
 
 using namespace std::experimental;
 
@@ -21,32 +23,32 @@ enum Dir {
 enum NUMBERS {
     RABBITS_AMOUNT  = 10,
     SNAKE_TIME      = 400000000,
-    RABBIT_TIME     = 5
+    RABBIT_TIME     = 5,
 };
 
 //using Coord = std::pair<int, int>;
 
 struct Coord : public std::pair<int, int> {
   using Base = std::pair<int, int>;
-  int distance(const Coord& c1/*, const Coord & c2*/) const;
+  int distance(const Coord& c1) const;
   using Base::Base;
 };
 
 class Snake {
 public:
-    Snake                               ();
-    Snake                               (const Snake &);
+    Snake();
+    Snake(const Snake &);
 
-    std::list<Coord>        body_;
-    Dir                     direction_;
-    bool                    alive_;
-    Snake &                 operator=   (Snake const &s);
-    void                    move        ();
-    Coord                   next        ();
+    std::list<Coord> body_;
+    Dir direction_;
+    bool alive_;
+    Snake& operator=(Snake const &s);
+    void move();
+    Coord next();
 };
 
 using Rabbit        = Coord;
-using SnakePainter  = std::function<void(Coord, Dir)>;//void is a return type
+using SnakePainter  = std::function<void(Coord, Dir)>;
 using RabbitPainter = std::function<void(Coord)>;
 
 class Control;
@@ -55,26 +57,29 @@ class Game {
 public:
     Game();
 
-    std::list<Snake*>      snakes;
-    std::list<Rabbit>      rabbits;
+    std::list<Snake*> snakes;
+    std::list<Rabbit> rabbits;
 
-    void    paint           (SnakePainter sp, RabbitPainter rb);
-    void    add             (Snake * p);
-    void    move            ();
-    Coord   getFreeCoord    () const; //if the Coordinate is free or not
-    bool    isFree          (const Coord c) const;
-    char    checkForSnakes  (const Coord c) const;
-    void    killRabbit      (const Coord c);
+    void paint(SnakePainter sp, RabbitPainter rb);
 
-    void    createRabbit    ();
-    optional<Coord>         near        (const Coord& c) const;
+    void add(Snake* p);
+    void move();
 
-    //single-tone
-    static Game *  game_inst_;
-    static Game *  get();
+    Coord getFreeCoord() const;
+    bool isFree(const Coord c) const;
 
+    char checkForSnakes(const Coord c) const;
 
-    std::list<Control*>    controls;
+    void killRabbit(const Coord c);
+    void createRabbit();
+
+    optional<Coord> near(const Coord &c) const;
+
+    static Game* game_inst_;
+    static Game* get();
+
+    std::list<Control *> controls;
 };
 
-#endif
+
+#endif // GAME_H

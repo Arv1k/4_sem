@@ -4,13 +4,14 @@
 #include "view.h"
 #include "tui.h"
 
-View * View::inst_ = nullptr;
+
+View* View::inst_ = nullptr;
 
 View::~View() {
     inst_ = nullptr;
 }
 
-View * View::get() {
+View* View::get() {
     if (inst_ != nullptr) {
         return inst_;
     }

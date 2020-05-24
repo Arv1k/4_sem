@@ -2,30 +2,24 @@
 #include <climits>
 #include "game.h"
 #include "view.h"
-#include "control.h"
 #include "tui.h"
 #include <random>
 
+
 int Coord::distance(const Coord & c1/*, const Coord & c2*/) const {
     int res = abs(c1.first - this->first) + abs(c1.second - this->second);
-    //int res = abs(c1.first - c2.first) + abs(c1.second - c2.second);
     return res;
 }
-/*int distance(const Coord & c1, const Coord & c2)
-{
-    int res = abs(c1.first - c2.first) + abs(c1.second - c2.second);
-    return res;
-}*/
 
 optional<Coord> Game::near(const Coord &c) const {
     int min = INT_MAX;
-    optional<Coord> closest_rabbit; //no value
+    optional<Coord> closest_rabbit;
 
     for (auto i : rabbits) {
         if (i.distance(c) < min) {
             min = i.distance(c);
             fout << "min" << min << std::endl;
-            closest_rabbit = i; // if there is somwthing, we take it
+            closest_rabbit = i;
         }
     }
 
@@ -37,8 +31,7 @@ optional<Coord> Game::near(const Coord &c) const {
 
 Game::Game() {
     View* v = View::get();
-    v->setOnTimer(500, std::bind(&Game::move,
-                                 this)); //TODO:maybe change for 500 instead of SNAKE_TIME
+    v->setOnTimer(500, std::bind(&Game::move, this));
 
     for (int i = 0; i < RABBITS_AMOUNT; ++i) {
         createRabbit();
@@ -56,8 +49,6 @@ Snake::Snake() {
     for (int i = 0; i < 4; i++) {
         body_.emplace_back(Coord(start.first, start.second));
     }
-    //TODO:check why Idea told to replace push_back with emplace_back
-    //body.push_back(Coord(start.first, start.second));
 }
 
 Snake::Snake(const Snake & s):
@@ -97,7 +88,6 @@ Coord Game::getFreeCoord() const {
 }
 
 bool Game::isFree(const Coord c) const {
-    //check that snake doesn't eat itself
     for (const auto i : snakes) {
         for (const auto &b : i->body_) {
             if (c == b) {
@@ -106,7 +96,6 @@ bool Game::isFree(const Coord c) const {
         }
     }
 
-    //check there is no rabbit
     for(const Coord &i : rabbits) {
         if (i == c) {
             return false;
@@ -123,7 +112,7 @@ bool Game::isFree(const Coord c) const {
 }
 
 void Game::paint(SnakePainter snake_painter, RabbitPainter rabbit_painter) {
-    bool head;//print the head of snake or print it's body
+    bool head;
     for (const auto s: snakes) {
         head = true;
         for (const auto &b: s->body_) {
@@ -151,16 +140,12 @@ void Game::move() {
     bool game_over = true;
 
     View *v = View::get();
-    //if there is even one snake alive, game goes on
+
     for (const auto &s: snakes)
         if (s->alive_) {
             game_over = false;
             break;
         }
-    //otherwise, if all of them are dead, game is over
-    //if(game_over) ;
-
-    //View::get()->
 
     for (auto s: snakes)
         if (s->alive_)
@@ -168,12 +153,10 @@ void Game::move() {
 
     v->draw();
     v->setOnTimer(SNAKE_TIME, std::bind(&Game::move, this));
-    //TODO:????????????????????????????
+
     for (auto c:controls) {
         c->onMove();
     }
-    //?????????????????????????????????
-    /*for(auto s:snakes) { s->move(); }*/
 }
 
 Coord Snake::next() {
@@ -206,18 +189,16 @@ void Snake::move() {
             body_.pop_back();
             break;
 
-            //if snake eats itself, then it dies
         case 's':
             alive_ = false;
             fout << "GAME OVER: snake" << std::endl;
             break;
-            //if it goes out of boundaries, it also dies
+
         case 'b':
             alive_ = false;
             fout << "GAME OVER: boundaries" << std::endl;
             break;
-            //eats a rabbit
-            //mmmmmm... delicious
+
         case 'r':
             Game::get()->killRabbit(a);
             body_.push_front(a);
@@ -226,9 +207,6 @@ void Snake::move() {
         default:
             break;
     }
-    //TODO:check for pure virtual method called (dctr)
-    //body_.push_front(a);
-    //body_.pop_back();
 }
 
 void Game::killRabbit(const Coord c) {
@@ -255,19 +233,17 @@ char Game::checkForSnakes(const Coord c) const {
         }
     }
 
-    //check for bounds
-    //fout << View::get()->view_x_ << " " << View::get()->view_y_ << std::endl;
     if (c.first <= 1 || c.second <= 1 || c.first >= View::get()->view_x_ ||
         c.second >= View::get()->view_y_)
         return 'b';
 
-    return ' ';//coordinate is free
+    return ' ';
 }
 
 void Game::createRabbit() {
     Coord res;
     srand(1);
-    //TODO: check what time you need
+
     View::get()->setOnTimer(8, std::bind(&Game::createRabbit, this));
 
     while (1) {

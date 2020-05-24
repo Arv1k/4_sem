@@ -8,6 +8,7 @@
 #include <functional>
 #include <poll.h>
 
+
 using namespace std::placeholders;
 
 #include "tui.h"
@@ -45,22 +46,18 @@ void Tui::getWinSize() {
     struct winsize ws;
     ioctl(1, TIOCGWINSZ, &ws);
 
-    view_x_ = 80; //check there is no division by zero (floating point exception)
+    view_x_ = 80;
     view_y_ = 80;
 
     view_x_ = ws.ws_row;
     view_y_ = ws.ws_col;
-
-    //Coord res = {ws.ws_row, ws.ws_col};
-    //return res;
 }
 
-//we ought to have an argument, even if it is not used
 void onwinch(int x) {
     View::get()->draw();
 }
 
-Tui::Tui() /*view_x_(0), view_y_(0)*/ {
+Tui::Tui() {
     getWinSize();
     setbuf(stdout, NULL);
 
@@ -88,32 +85,18 @@ Tui::~Tui() {
     printf("Goodbye\n");
 }
 
-void Tui::run() {/*
-    while(1){
-        int c;
-        gotoxy(x_/2, y_/2);
-        c = getchar();
-
-        if(c == 'q')
-            break;
-
-        if(c != -1)
-        {
-            if(onkey_delegate_ != nullptr)
-                onkey_delegate_->onkey(c);
-        }
-    }*/
+void Tui::run() {
     char cmd;
     nfds_t nfds = 1;
     int fds_ready = -1;
 
-    pollfd *poll_stdin_master = new struct pollfd[nfds];
-    pollfd *poll_stdin_set = new struct pollfd[nfds];
+    pollfd* poll_stdin_master = new struct pollfd[nfds];
+    pollfd* poll_stdin_set = new struct pollfd[nfds];
 
-    poll_stdin_master[0].fd = STDIN_FILENO; //== stdin == 0
+    poll_stdin_master[0].fd = STDIN_FILENO;
     poll_stdin_master[0].events = POLLIN;
 
-    while (1) {
+    for (;;) {
         draw();
         for (unsigned int i = 0; i < nfds; ++i)
             poll_stdin_set[i] = poll_stdin_master[i];
@@ -160,6 +143,3 @@ void Tui::rabbitPainter(const Coord c) {
     gotoxy(c.first, c.second);
     putchar('@');
 }
-
-//int Tui::getY() { return view_y_; }
-//int Tui::getX() { return view_x_; }
