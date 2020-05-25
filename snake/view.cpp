@@ -25,5 +25,6 @@ void View::setOnTimer(int time, Timeoutable timer) {
 
     res.first = time;
     res.second = timer;
+
     timer_.emplace_back(res);
 }

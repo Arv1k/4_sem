@@ -85,6 +85,9 @@ public:
         p_read_.first = std::promise<void> ();
         p_write_.second = p_read_.first.get_future();
     }
+
+    int flag_read = 0;
+    int flag_write = 0;
 };
 
 

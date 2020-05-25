@@ -44,6 +44,8 @@ void cp_src_to_dest (FILE* file_1, FILE* file_2, buffer& buf) {
 
                 buf.read_get();
                 cur_offset = 0;
+
+                buf.flag_write = 0;
             }
 
             int to_read = (buf.capacity() - buf.size() >= max_val) ?
@@ -57,9 +59,11 @@ void cp_src_to_dest (FILE* file_1, FILE* file_2, buffer& buf) {
             PRINTF("Reader: buf size: %d, my offset: %d\n\n",
                     buf.size(), cur_offset);
 
-            if (buf.size()*100 > 80*buf.capacity()) {
+            if ((buf.size()*100 > 80*buf.capacity()) && buf.flag_read != 1) {
                 PRINTF("\nReader: Calling Writer!\n\n");
                 buf.read_set();
+
+                buf.flag_read = 1;
             }
         } while (ch_read != 0);
 
@@ -73,12 +77,16 @@ void cp_src_to_dest (FILE* file_1, FILE* file_2, buffer& buf) {
     std::thread thread_write([](buffer &buf, FILE *file_write) {
         int ch_write = 0;
         int cur_offset = 0;
+
+        int flag = 0;
         do {
             if (buf.size() == 0) {
                 PRINTF("\nWriter: Oops, waiting x1\n\n");
 
                 buf.write_get();
                 cur_offset = 0;
+
+                buf.flag_read = 0;
             }
 
             if (cur_offset >= buf.capacity()) {
@@ -86,6 +94,8 @@ void cp_src_to_dest (FILE* file_1, FILE* file_2, buffer& buf) {
 
                 buf.write_get();
                 cur_offset = 0;
+
+                buf.flag_read = 0;
             }
 
             int to_write = (buf.size() >= max_val) ? max_val : buf.size();
@@ -99,10 +109,12 @@ void cp_src_to_dest (FILE* file_1, FILE* file_2, buffer& buf) {
             PRINTF("Writer: buf size: %d, my offset: %d\n\n",
                     buf.size(), cur_offset);
 
-            if (buf.size() * 100 < 20 * buf.capacity() && buf.flag() == 1) {
+            if ((buf.size() * 100 < 20 * buf.capacity()) && buf.flag_write != 1) {
                 PRINTF("\nWriter: Calling Reader!\n\n");
 
                 buf.write_set();
+
+                buf.flag_write = 1;
             }
         } while (buf.size() != 0 || buf.flag() == 1);
     }, std::ref(buf), file_2);

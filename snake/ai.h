@@ -2,7 +2,7 @@
 #define AI_H
 
 
-#import "control.h"
+#include "control.h"
 
 
 class Ai : public Control {

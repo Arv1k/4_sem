@@ -14,15 +14,20 @@ int main() {
     Game* g = Game::get();
 
     Snake s;
-    Snake s_ai;
+    Snake s_ai_1;
+    Snake s_ai_2;
 
-    Ai ai(&s_ai, g);
+    Ai ai_1(&s_ai_1, g);
+    Ai ai_2(&s_ai_2, g);
     Human h(&s, g);
 
     g->add(&s);
 
-    g->controls.push_back(&ai);
-    g->add(&s_ai);
+    g->controls.push_back(&ai_1);
+    g->add(&s_ai_1);
+
+    g->controls.push_back(&ai_2);
+    g->add(&s_ai_2);
 
     v->setModel(g);
     v->draw();

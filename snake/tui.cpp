@@ -38,16 +38,16 @@ void Tui::draw() {
     drawLineY(0, view_y_, view_x_);
 
     game_->paint(std::bind(&View::snakePainter, this, _1, _2),
-                 std::bind(&View::rabbitPainter, this, _1));
+                 std::bind(&View::rabbitPainter, this, _1)); /// 2 bind
+
     fflush(stdout);
 }
 
 void Tui::getWinSize() {
-    struct winsize ws;
-    ioctl(1, TIOCGWINSZ, &ws);
+    clearScreen();
 
-    view_x_ = 80;
-    view_y_ = 80;
+    struct winsize ws;
+    ioctl(0, TIOCGWINSZ, &ws);
 
     view_x_ = ws.ws_row;
     view_y_ = ws.ws_col;
@@ -58,24 +58,26 @@ void onwinch(int x) {
 }
 
 Tui::Tui() {
-    getWinSize();
-    setbuf(stdout, NULL);
+    clearScreen();
 
-    struct sigaction sa = {0};
+    getWinSize();
+    //setbuf(stdout, NULL);
+
+    struct sigaction sa = {0}; /// 3
     sa.sa_handler = onwinch;
     sa.sa_flags = SA_RESTART;
-    sigaction(SIGWINCH, &sa, 0);
+    sigaction(SIGWINCH, &sa, nullptr);
 
     struct termios cur_mode;
-    tcgetattr(STDIN_FILENO, &cur_mode); //stdin == 0
+    tcgetattr(0, &cur_mode);
     old_ = cur_mode;
     cfmakeraw(&cur_mode);
-    tcsetattr(STDIN_FILENO, TCSANOW, &cur_mode);
+    tcsetattr(0, TCSAFLUSH, &cur_mode);
 }
 
 
 void Tui::clearScreen() {
-    printf("\e[H\e[J");
+    printf("\ec");
 }
 
 Tui::~Tui() {
@@ -87,6 +89,7 @@ Tui::~Tui() {
 
 void Tui::run() {
     char cmd;
+
     nfds_t nfds = 1;
     int fds_ready = -1;
 
@@ -96,14 +99,15 @@ void Tui::run() {
     poll_stdin_master[0].fd = STDIN_FILENO;
     poll_stdin_master[0].events = POLLIN;
 
-    for (;;) {
-        draw();
+
+    draw();
+    while (1) {
         for (unsigned int i = 0; i < nfds; ++i)
             poll_stdin_set[i] = poll_stdin_master[i];
 
         fds_ready = poll(poll_stdin_set, nfds, timer_.front().first);
         if (fds_ready < 0) {
-            fout << "ERROR: poll" << __PRETTY_FUNCTION__ << std::endl;
+            fout << "ERROR: poll " << __PRETTY_FUNCTION__ << errno << std::endl;
             break;
         } else if (fds_ready == 0) {
             std::pair<long, Timeoutable> a = timer_.front();

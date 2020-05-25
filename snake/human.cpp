@@ -16,7 +16,7 @@ Human::~Human() {
 }
 
 void Human::onkey(int key) {
-    View *v = View::get();
+    View* v = View::get();
     switch (key) {
         case 'q':
             delete v;

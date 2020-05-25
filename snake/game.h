@@ -40,10 +40,15 @@ public:
     Snake(const Snake &);
 
     std::list<Coord> body_;
+
     Dir direction_;
+
     bool alive_;
+
     Snake& operator=(Snake const &s);
+
     void move();
+
     Coord next();
 };
 
@@ -78,7 +83,7 @@ public:
     static Game* game_inst_;
     static Game* get();
 
-    std::list<Control *> controls;
+    std::list<Control*> controls;
 };
 
 

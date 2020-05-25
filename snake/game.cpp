@@ -11,7 +11,7 @@ int Coord::distance(const Coord & c1/*, const Coord & c2*/) const {
     return res;
 }
 
-optional<Coord> Game::near(const Coord &c) const {
+optional<Coord> Game::near(const Coord &c) const { /// 4 optional
     int min = INT_MAX;
     optional<Coord> closest_rabbit;
 
@@ -141,20 +141,20 @@ void Game::move() {
 
     View *v = View::get();
 
-    for (const auto &s: snakes)
+    for (const auto &s : snakes)
         if (s->alive_) {
             game_over = false;
             break;
         }
 
-    for (auto s: snakes)
+    for (auto s : snakes)
         if (s->alive_)
             s->move();
 
     v->draw();
     v->setOnTimer(SNAKE_TIME, std::bind(&Game::move, this));
 
-    for (auto c:controls) {
+    for (auto c : controls) {
         c->onMove();
     }
 }
@@ -176,6 +176,7 @@ Coord Snake::next() {
             a.second--;
             break;
     }
+
     return a;
 }
 

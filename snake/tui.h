@@ -15,11 +15,8 @@
 
 static std::ofstream fout("logFile.txt");
 
-class Tui:public View {
+class Tui : public View {
 private:
-    //int x_;
-    //int y_;
-
     struct termios old_;
 
 public:

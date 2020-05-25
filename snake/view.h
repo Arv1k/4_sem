@@ -15,8 +15,8 @@ public:
     void virtual run() = 0;
 
     virtual ~View() = 0;
-    static View *inst_;
-    static View *get();
+    static View* inst_;
+    static View* get();
 
     virtual void getWinSize() = 0;
 
@@ -27,13 +27,13 @@ public:
     KeyPressable* onkey_delegate_;
     Ai* ai_delegate_;
 
-    void setOnAi(Ai *ai) {
+    void setOnAi(Ai* ai) {
         ai_delegate_ = ai;
     };
 
     Game* game_;
 
-    void setModel(Game *g) {
+    void setModel(Game* g) {
         game_ = g;
     };
 
