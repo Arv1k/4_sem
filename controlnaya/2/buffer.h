@@ -4,90 +4,134 @@
 
 class buffer {
 private:
-    char *buf_;
     int capacity_;
+    int block_size_;
     int size_;
-    int flag_;
+    char* data_;
 
-    std::pair <std::promise<void>, std::future<void>> p_read_;
-    std::pair <std::promise<void>, std::future<void>> p_write_;
+    std::pair <std::promise<void>, std::future<void>> read_p_;
+    std::pair <std::promise<void>, std::future<void>> write_p_;
 
     std::mutex lock_;
 
-public:
-    explicit buffer(int cap) {
-        buf_ = new char[cap];
-        capacity_ = cap;
-        size_ = 0;
-        flag_ = 0;
+    int read_offset_ = 0;
+    int write_offset_ = 0;
 
-        p_read_.second  = p_write_.first.get_future();
-        p_write_.second = p_read_.first.get_future();
-    };
+    bool read_pr_flag_ = true;
+    bool write_pr_flag_ = true;
+
+    void dump(FILE* there) {
+        lock_.lock();
+        fprintf(there, "\ncapacity_ = %d\n", capacity_);
+        fprintf(there, "block_size_ = %d\n", block_size_);
+        fprintf(there, "size_ = %d\n", size_);
+        fprintf(there, "read_offset_ = %d\n", read_offset_);
+        fprintf(there, "write_offset_ = %d\n", write_offset_);
+        fprintf(there, "read_pr_flag = %d\n", read_pr_flag_);
+        fprintf(there, "write_pr_flag_ = %d\n\n", write_pr_flag_);
+        lock_.unlock();
+    }
+
+public:
+    bool is_reading = false;
+
+    explicit buffer(int capacity, int block_size):
+    capacity_(capacity), block_size_(block_size), size_(0) {
+        data_ = new char[capacity_];
+
+        read_p_.second = write_p_.first.get_future();
+        write_p_.second = read_p_.first.get_future();
+    }
 
     ~buffer() {
-        delete[] buf_;
         capacity_ = -1;
+        block_size_ = -1;
         size_ = -1;
-        flag_ = -1;
+
+        delete [] data_;
+        data_ = nullptr;
     }
 
-    int size() {
-        return size_;
-    }
-
-    int capacity() {
-        return capacity_;
-    }
-
-    char *buf() {
-        return buf_;
-    }
-
-    void plus_size(int heh) {
+    int read_from(int src_fd) {
         lock_.lock();
-        size_ += heh;
+        int remaining = capacity_ - size_;
+        int to_read = (remaining > block_size_)? block_size_ : remaining;
+        int ch_read = read(src_fd, data_ + read_offset_, to_read);
+        size_ += ch_read;
         lock_.unlock();
-    }
 
-    void minus_size(int heh) {
+        read_offset_ += ch_read;
+
+        // fprintf(stderr, "\nReader: ch_read = %d\n", ch_read);
+        //dump(stderr);
+
         lock_.lock();
-        size_ -= heh;
+        if ((size_*100 > 80*capacity_) && read_pr_flag_) {
+            read_p_.first.set_value();
+
+            read_pr_flag_ = false;
+        }
         lock_.unlock();
+
+        if (read_offset_ == capacity_) {
+            read_p_.second.get();
+
+            lock_.lock();
+            write_p_.first = std::promise<void> ();
+            read_p_.second = write_p_.first.get_future();
+            write_pr_flag_ = true;
+            lock_.unlock();
+
+            read_offset_ = 0;
+        }
+
+        return ch_read;
     }
 
-    int flag() {
-        return flag_;
+    int write_in(int dest_fd) {
+        lock_.lock();
+        if (size_ == 0) {
+            lock_.unlock();
+            write_p_.second.get();
+
+            lock_.lock();
+            read_p_.first = std::promise<void> ();
+            write_p_.second = read_p_.first.get_future();
+            read_pr_flag_ = true;
+            lock_.unlock();
+
+            write_offset_ = 0;
+        }
+        lock_.unlock();
+
+        lock_.lock();
+        int to_write = (size_ > block_size_)? block_size_ : size_;
+        int ch_write = write(dest_fd, data_ + write_offset_, to_write);
+        size_ -= ch_write;
+        lock_.unlock();
+
+        write_offset_ += ch_write;
+
+        //fprintf(stderr, "\nWriter: ch_write = %d\n", ch_write);
+        //dump(stderr);
+
+        lock_.lock();
+        if ((size_*100 < 20*capacity_) && write_pr_flag_) {
+            write_p_.first.set_value();
+
+            write_pr_flag_ = false;
+        }
+        lock_.unlock();
+
+        lock_.lock();
+        if (size_ == 0 && !is_reading) {
+            lock_.unlock();
+            return 0;
+        }
+        lock_.unlock();
+
+        return ch_write;
     }
-
-    void change_flag(int new_flag) {
-        flag_ = new_flag;
-    }
-
-    void read_set() {
-        p_read_.first.set_value();
-    }
-
-    void write_set() {
-        p_write_.first.set_value();
-    }
-
-    void read_get() {
-        p_read_.second.get();
-
-        p_write_.first = std::promise<void> ();
-        p_read_.second = p_write_.first.get_future();
-    }
-
-    void write_get() {
-        p_write_.second.get();
-
-        p_read_.first = std::promise<void> ();
-        p_write_.second = p_read_.first.get_future();
-    }
-
-    int flag_read = 0;
-    int flag_write = 0;
 };
 
 

@@ -99,7 +99,6 @@ void Tui::run() {
     poll_stdin_master[0].fd = STDIN_FILENO;
     poll_stdin_master[0].events = POLLIN;
 
-
     draw();
     while (1) {
         for (unsigned int i = 0; i < nfds; ++i)
@@ -116,6 +115,7 @@ void Tui::run() {
             continue;
         }
 
+        fout << "Check cycle" << std::endl;
         for (unsigned int i = 0; i < nfds; ++i) {
             if (poll_stdin_set[i].revents == POLLIN) {
                 if (read(poll_stdin_set[i].fd, &cmd, 1) == -1) {
@@ -124,10 +124,16 @@ void Tui::run() {
                     break;
                 }
 
-                if (onkey_delegate_) onkey_delegate_->onkey(cmd);
+                if (onkey_delegate_) {
+                    fout << "In onkey_delegate_ if" << std::endl;
+
+                    onkey_delegate_->onkey(cmd);
+
+                    fout << "Out fromm onkey_delegate_ if" << std::endl;
+                }
             }
         }
-
+        fout << "Cycle checked" << std::endl;
     }
 
     delete[] poll_stdin_master;
@@ -140,7 +146,10 @@ void Tui::gotoxy(int x, int y) {
 
 void Tui::snakePainter(Coord c, Dir d) {
     gotoxy(c.first, c.second);
-    putchar("^v><#"[d]);
+
+    char c = "^v><#"[d];
+
+    printf("\e[31m%c\e[0m", c);
 }
 
 void Tui::rabbitPainter(const Coord c) {

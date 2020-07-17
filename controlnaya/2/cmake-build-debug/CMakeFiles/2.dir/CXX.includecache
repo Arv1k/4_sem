@@ -17,6 +17,10 @@ mutex
 -
 future
 -
+unistd.h
+-
+fcntl.h
+-
 buffer.h
 /home/arv1k/CLionProjects/4_sem/controlnaya/2/buffer.h
 

@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/snake_clion.dir/main.cpp.o CMakeFiles/snake_clion.dir/view.cpp.o CMakeFiles/snake_clion.dir/tui.cpp.o CMakeFiles/snake_clion.dir/human.cpp.o CMakeFiles/snake_clion.dir/game.cpp.o CMakeFiles/snake_clion.dir/ai.cpp.o  -o snake_clion 

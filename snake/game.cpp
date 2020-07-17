@@ -6,7 +6,7 @@
 #include <random>
 
 
-int Coord::distance(const Coord & c1/*, const Coord & c2*/) const {
+int Coord::distance(const Coord& c1/*, const Coord & c2*/) const {
     int res = abs(c1.first - this->first) + abs(c1.second - this->second);
     return res;
 }

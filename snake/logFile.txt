@@ -1,18 +1,26 @@
-min42
+Check cycle
+In onkey_delegate_ if
+Out fromm onkey_delegate_ if
+Cycle checked
+Check cycle
+In onkey_delegate_ if
+Out fromm onkey_delegate_ if
+Cycle checked
+Check cycle
+In onkey_delegate_ if
+Out fromm onkey_delegate_ if
+Cycle checked
+Check cycle
+In onkey_delegate_ if
+est_rabbit:9 35
+min33
 min2
-closest_rabbit:2 101
-min43
+closest_rabbit:9 35
+min32
 min1
-closest_rabbit:2 101
-min42
-closest_rabbit:13 70
-min41
-closest_rabbit:13 70
-min40
-closest_rabbit:13 70
-min39
-closest_rabbit:13 70
-min38
-closest_rabbit:13 70
-min37
-closest_rabbit:13 70
+closest_rabbit:9 35
+min31
+min28
+min26
+min15
+closest_rabbit:2 27

@@ -1,0 +1,598 @@
+min42
+min2
+closest_rabbit:2 101
+min55
+min47
+min26
+min13
+closest_rabbit:37 114
+min43
+min1
+closest_rabbit:2 101
+min56
+min48
+min25
+min12
+closest_rabbit:37 114
+min42
+closest_rabbit:13 70
+min57
+min49
+min24
+min11
+closest_rabbit:37 114
+min41
+closest_rabbit:13 70
+min58
+min50
+min25
+min10
+closest_rabbit:37 114
+min40
+closest_rabbit:13 70
+min59
+min51
+min26
+min9
+closest_rabbit:37 114
+min39
+closest_rabbit:13 70
+min60
+min52
+min25
+min8
+closest_rabbit:37 114
+min38
+closest_rabbit:13 70
+min61
+min53
+min24
+min7
+closest_rabbit:37 114
+min37
+closest_rabbit:13 70
+min62
+min54
+min25
+min6
+closest_rabbit:37 114
+min36
+closest_rabbit:13 70
+min63
+min55
+min26
+min5
+closest_rabbit:37 114
+min35
+closest_rabbit:13 70
+min64
+min56
+min27
+min4
+closest_rabbit:37 114
+min34
+closest_rabbit:13 70
+min65
+min57
+min26
+min3
+closest_rabbit:37 114
+min33
+closest_rabbit:13 70
+min66
+min58
+min27
+min2
+closest_rabbit:37 114
+min32
+closest_rabbit:13 70
+min67
+min59
+min28
+min1
+closest_rabbit:37 114
+min31
+closest_rabbit:13 70
+min68
+min60
+min29
+closest_rabbit:27 133
+min30
+closest_rabbit:13 70
+min69
+min61
+min28
+closest_rabbit:27 133
+min29
+closest_rabbit:13 70
+min68
+min60
+min27
+closest_rabbit:27 133
+min28
+closest_rabbit:13 70
+min69
+min61
+min26
+closest_rabbit:27 133
+min27
+closest_rabbit:13 70
+min68
+min60
+min25
+closest_rabbit:27 133
+min26
+closest_rabbit:13 70
+min69
+min61
+min24
+closest_rabbit:27 133
+min25
+closest_rabbit:13 70
+min70
+min62
+min23
+closest_rabbit:27 133
+min24
+closest_rabbit:13 70
+min71
+min63
+min22
+closest_rabbit:27 133
+min23
+closest_rabbit:13 70
+min70
+min62
+min21
+closest_rabbit:27 133
+min22
+closest_rabbit:13 70
+min71
+min63
+min20
+closest_rabbit:27 133
+min21
+closest_rabbit:13 70
+min72
+min64
+min19
+closest_rabbit:27 133
+min20
+closest_rabbit:13 70
+min71
+min63
+min18
+closest_rabbit:27 133
+min19
+closest_rabbit:13 70
+min72
+min64
+min17
+closest_rabbit:27 133
+min18
+closest_rabbit:13 70
+min71
+min63
+min16
+closest_rabbit:27 133
+min17
+closest_rabbit:13 70
+min72
+min64
+min15
+closest_rabbit:27 133
+min16
+closest_rabbit:13 70
+min71
+min63
+min14
+closest_rabbit:27 133
+min15
+closest_rabbit:13 70
+min72
+min64
+min13
+closest_rabbit:27 133
+min14
+closest_rabbit:13 70
+min73
+min65
+min12
+closest_rabbit:27 133
+min13
+closest_rabbit:13 70
+min72
+min64
+min11
+closest_rabbit:27 133
+min12
+closest_rabbit:13 70
+min73
+min65
+min10
+closest_rabbit:27 133
+min11
+closest_rabbit:13 70
+min72
+min64
+min9
+closest_rabbit:27 133
+min10
+closest_rabbit:13 70
+min73
+min65
+min8
+closest_rabbit:27 133
+min9
+closest_rabbit:13 70
+min74
+min66
+min7
+closest_rabbit:27 133
+min8
+closest_rabbit:13 70
+min75
+min67
+min6
+closest_rabbit:27 133
+min7
+closest_rabbit:13 70
+min74
+min66
+min5
+closest_rabbit:27 133
+min6
+closest_rabbit:13 70
+min73
+min65
+min4
+closest_rabbit:27 133
+min5
+closest_rabbit:13 70
+min74
+min66
+min3
+closest_rabbit:27 133
+min4
+closest_rabbit:13 70
+min75
+min67
+min2
+closest_rabbit:27 133
+min3
+closest_rabbit:13 70
+min76
+min68
+min1
+closest_rabbit:27 133
+min2
+closest_rabbit:13 70
+min77
+min69
+closest_rabbit:24 67
+min1
+closest_rabbit:13 70
+min76
+min68
+closest_rabbit:24 67
+min14
+closest_rabbit:24 67
+min67
+closest_rabbit:24 67
+min13
+closest_rabbit:24 67
+min66
+closest_rabbit:24 67
+min12
+closest_rabbit:24 67
+min65
+closest_rabbit:24 67
+min11
+closest_rabbit:24 67
+min64
+closest_rabbit:24 67
+min10
+closest_rabbit:24 67
+min63
+closest_rabbit:24 67
+min9
+closest_rabbit:24 67
+min62
+closest_rabbit:24 67
+min8
+closest_rabbit:24 67
+min61
+closest_rabbit:24 67
+min7
+closest_rabbit:24 67
+min60
+closest_rabbit:24 67
+min6
+closest_rabbit:24 67
+min59
+closest_rabbit:24 67
+min5
+closest_rabbit:24 67
+min58
+closest_rabbit:24 67
+min4
+closest_rabbit:24 67
+min57
+closest_rabbit:24 67
+min3
+closest_rabbit:24 67
+min56
+closest_rabbit:24 67
+min2
+closest_rabbit:24 67
+min55
+closest_rabbit:24 67
+min1
+closest_rabbit:24 67
+min54
+closest_rabbit:24 67
+min10
+closest_rabbit:25 58
+min63
+closest_rabbit:25 58
+min9
+closest_rabbit:25 58
+min62
+closest_rabbit:25 58
+min8
+closest_rabbit:25 58
+min61
+closest_rabbit:25 58
+min7
+closest_rabbit:25 58
+min60
+closest_rabbit:25 58
+min6
+closest_rabbit:25 58
+min59
+closest_rabbit:25 58
+min5
+closest_rabbit:25 58
+min58
+closest_rabbit:25 58
+min4
+closest_rabbit:25 58
+min57
+closest_rabbit:25 58
+min3
+closest_rabbit:25 58
+min56
+closest_rabbit:25 58
+min2
+closest_rabbit:25 58
+min55
+closest_rabbit:25 58
+min1
+closest_rabbit:25 58
+min54
+closest_rabbit:25 58
+min22
+min18
+closest_rabbit:9 60
+min75
+min67
+closest_rabbit:9 60
+min23
+min17
+closest_rabbit:9 60
+min74
+min66
+closest_rabbit:9 60
+min16
+closest_rabbit:9 60
+min65
+closest_rabbit:9 60
+min15
+closest_rabbit:9 60
+min64
+closest_rabbit:9 60
+min14
+closest_rabbit:9 60
+min63
+closest_rabbit:9 60
+min13
+closest_rabbit:9 60
+min62
+closest_rabbit:9 60
+min12
+closest_rabbit:9 60
+min61
+closest_rabbit:9 60
+min11
+closest_rabbit:9 60
+min60
+closest_rabbit:9 60
+min10
+closest_rabbit:9 60
+min59
+closest_rabbit:9 60
+min9
+closest_rabbit:9 60
+min58
+closest_rabbit:9 60
+min8
+closest_rabbit:9 60
+min57
+closest_rabbit:9 60
+min7
+closest_rabbit:9 60
+min56
+closest_rabbit:9 60
+min6
+closest_rabbit:9 60
+min55
+closest_rabbit:9 60
+min5
+closest_rabbit:9 60
+min54
+closest_rabbit:9 60
+min4
+closest_rabbit:9 60
+min53
+closest_rabbit:9 60
+min3
+closest_rabbit:9 60
+min52
+closest_rabbit:9 60
+min2
+closest_rabbit:9 60
+min51
+closest_rabbit:9 60
+min1
+closest_rabbit:9 60
+min50
+closest_rabbit:9 60
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+GAME OVER: boundaries
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
+closest_rabbit:0 0
